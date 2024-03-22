@@ -135,13 +135,14 @@ export default App = () => {
           // Store user details in Firestore
           
           // Reference to the 'users' collection
-const usersCollection = collection(firestore, "users");
+// Reference to the users collection
+const usersCollection = collection(firestore, 'users');
 
-// Reference to the document using the user's email as the document ID
+// Reference to the user document using the user's email as the document ID
 const userDocRef = doc(usersCollection, email);
 
-// Reference to the 'userDetails' subcollection
-const userDetailsCollection = collection(userDocRef, "userDetails");
+// Reference to the user details subcollection within the user's document
+const userDetailsCollection = collection(userDocRef, 'userDetails');
 
 // Data to be stored in the user details document
 const userDetailsData = {
@@ -152,8 +153,9 @@ const userDetailsData = {
   dob: dob,
 };
 
-// Set the document in Firestore
-await setDoc(userDetailsCollection, userDetailsData);
+// Set the document in the user details subcollection
+await setDoc(doc(userDetailsCollection), userDetailsData);
+
           console.log('User details stored in Firestore.');
         }
       }
