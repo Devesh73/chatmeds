@@ -3,7 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-nat
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import { getFirestore, collection, addDoc, setDoc, doc } from '@firebase/firestore';
-
+import AuthenticatedScreen from './screens/AuthenticatedScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5U_fgm-5VNdn0FLFp_n2_UZbsLb0TzNg",
@@ -86,15 +87,7 @@ const AuthScreen = ({name, setName, phone, setPhone, city, setCity, state, setSt
   );
 }
 
-const AuthenticatedScreen = ({ user, handleAuthentication }) => {
-  return (
-    <View style={styles.authContainer}>
-      <Text style={styles.title}>Welcome</Text>
-      
-      <Button title="Logout" onPress={handleAuthentication} color="#e74c3c" />
-    </View>
-  );
-};
+
 
 export default App = () => {
   const [name, setName] = useState('');
@@ -108,6 +101,7 @@ export default App = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const auth = getAuth(app);
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
